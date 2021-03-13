@@ -5,15 +5,13 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from helper import login
+import config
 import json
 import logging
 
-email = "cocacoda123@gmail.com"
-password = "_-k-MUfx;.uM9St"
-profile = "https://www.linkedin.com/in/tanjunhong98/"
-file_name = 'JHTan'
+profile = "https://www.linkedin.com/in/richardyang98/"
+file_name = 'RY'
 logging.basicConfig(filename='scrape.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
-
 
 options = Options()
 options.add_argument('--headless')
@@ -22,7 +20,7 @@ options.add_argument('--disable-dev-shm-usage')
 driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 logging.info("driver setup done")
 
-login(driver, email, password)
+login(driver, config.email, config.password)
 WebDriverWait(driver, 10).until(
     EC.presence_of_element_located((By.CLASS_NAME, "profile-rail-card__actor-link.t-16.t-black.t-bold")))
 logging.info("successfully logged in")

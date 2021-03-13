@@ -1,10 +1,13 @@
-import json
 import config
+import json
+import requests
 
-with open('JHTan.json', 'r') as json_file:
+file_name = 'RY.json'
+
+with open(file_name, 'r') as json_file:
     person_dict = json.load(json_file)
 
-print(json.dumps(person_dict, indent=4, sort_keys=True))
+# print(json.dumps(person_dict, indent=4, sort_keys=True))
 text = ""
 for x in person_dict["Interests"].keys():
     if x == 'Companies':
@@ -19,12 +22,10 @@ if "Recent Activities" in person_dict:
             y = x["Author Description"]
             text += (y+' ') if y is not None else ''
 
-# print(text)
-import requests
 if text != "":
     r = requests.post(
         "https://api.deepai.org/api/text-tagging",
-        data={'text': text },
+        data={'text': text},
         headers={'api-key': config.api_key}
     )
 
