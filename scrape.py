@@ -32,10 +32,9 @@ class Profile:
         self.fetch_interest_categories()
         self.printProgressBar(5, 7, "fetching recent activities\t\t", "Complete", length=50, printEnd="\r\n")
         self.fetch_recent_activies()
-        self.printProgressBar(6, 7, "cleaning up\t\t\t\t\t\t", "Complete", length=50, printEnd="\r\n")
+        self.printProgressBar(6, 7, "extracting keywords using NLP model", "Complete", length=50, printEnd="\r\n")
         pickle.dump(self.driver.get_cookies(), open("cookies.pkl", "wb"))
         self.driver.quit()
-        self.printProgressBar(7, 7, "exiting\t\t\t\t\t\t\t", "Complete", length=50, printEnd="\r\n")
 
         logging.info("finished scrapping")
 
@@ -215,7 +214,11 @@ def linkedin_scrapper(profile_link):
     options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
-    driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+    options.add_argument("window-size=1280,800")
+    options.add_argument(
+        "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36")
+    options.add_argument('--disable-blink-features=AutomationControlled')
+    driver = webdriver.Chrome("C:\\Users\\yangc\\Desktop\\Python\\Hack4Good-2021-LinkedIn_Keyword_Extractor\\chromedriver.exe", options=options)
     try:
         cookies = pickle.load(open("cookies.pkl", "rb"))
         for cookie in cookies:

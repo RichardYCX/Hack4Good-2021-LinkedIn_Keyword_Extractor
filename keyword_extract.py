@@ -42,6 +42,39 @@ def linkedin_data(profile_link):
     person_dict["keywords"] = person.keywords.split("\n")
     return person_dict
 
+def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█', printEnd="\r"):
+    """
+    Call in a loop to create terminal progress bar
+    @params:
+        iteration   - Required  : current iteration (Int)
+        total       - Required  : total iterations (Int)
+        prefix      - Optional  : prefix string (Str)
+        suffix      - Optional  : suffix string (Str)
+        decimals    - Optional  : positive number of decimals in percent complete (Int)
+        length      - Optional  : character length of bar (Int)
+        fill        - Optional  : bar fill character (Str)
+        printEnd    - Optional  : end character (e.g. "\r", "\r\n") (Str)
+    """
+    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
+    filledLength = int(length * iteration // total)
+    bar = fill * filledLength + '-' * (length - filledLength)
+    print(f'\r{prefix} |{bar}| {percent}% {suffix}', end=printEnd)
+    # Print New Line on Complete
+    if iteration == total:
+        print()
+
 
 if __name__ == "__main__":
-    print(linkedin_data("https://www.linkedin.com/in/richardyang98/"))
+    x = linkedin_data("https://www.linkedin.com/in/richardyang98/")
+    # print("People Following: ")
+    # print('\t'+y for y in x['Interests']['Influencers'])
+    # print()
+    print("Industries Following: ")
+    z = set([y["Industry"] for y in x['Interests']['Companies']])
+    for y in z:
+        print('\t' + y)
+    print()
+    print("Keywords: ")
+    for y in x["keywords"]:
+        print('\t' + y)
+    printProgressBar(7, 7, "exiting\t\t\t\t\t\t\t", "Complete", length=50, printEnd="\r\n")
